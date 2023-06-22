@@ -16,19 +16,23 @@ public class CheckersBoard : MonoBehaviour
 
     private void GenerateBoard()
     {
-        for (int y = 0; y < 3; y++)
+        for (int y = 0; y < 8; y++)
         {
-            bool oddRow = (y % 2 == 0);
-            for (int x = 0; x < 8; x += 2)
+            if (y != 3 && y != 4)
             {
-                GeneratePiece((oddRow ? x : x+1), y);
+                bool oddRow = (y % 2 == 0);
+                for (int x = 0; x < 8; x += 2)
+                {
+                    GeneratePiece((oddRow ? x : x + 1), y);
+                }
             }
         }
     }
 
     private void GeneratePiece(int x, int y)
     {
-        GameObject go = Instantiate(whitePiecePrefab) as GameObject;
+        bool isWhitePiece = (y > 3) ? false : true;
+        GameObject go = isWhitePiece ? Instantiate(whitePiecePrefab) : Instantiate(blackPiecePrefab) as GameObject;
         go.transform.SetParent(transform);
         Piece p = go.GetComponent<Piece>();
         pieces[x, y] = p;
