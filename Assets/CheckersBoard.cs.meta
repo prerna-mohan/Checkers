@@ -4,8 +4,8 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - whitePiecePrefab: {fileID: 6636208931125369819, guid: ed4be8d8ab239ad4c9250df261e44362, type: 3}
-  - blackPiecePrefab: {fileID: 3952632309996745479, guid: 61b22a8005e43de4ebff4058f3919ba1, type: 3}
+  - whitePiecePrefab: {instanceID: 0}
+  - blackPiecePrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

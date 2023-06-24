@@ -13,8 +13,11 @@ public class CheckersBoard : MonoBehaviour
     private Piece selectedPiece;
     private Vector2 startDrag;
     private Vector2 endDrag;
+    private bool isWhite;
+    private bool isWhiteTurn;
     private void Start()
     {
+        isWhiteTurn = true;
         GenerateBoard();
     }
 
@@ -58,7 +61,7 @@ public class CheckersBoard : MonoBehaviour
         }
         //check if valid move
         if(selectedPiece.validMove(pieces, x1, y1, x2, y2)){
-            if(Mathf.Abs(x1-x2)==2){
+            if(Mathf.Abs(x2-x2)==2){
                 Piece p = pieces[(x1 + x2)/2, (y1 + y2)/2];
                 if(p != null){
                     pieces[(x1 + x2)/2, (y1 + y2)/2] = null;
@@ -75,6 +78,12 @@ public class CheckersBoard : MonoBehaviour
     private void EndTurn(){
         selectedPiece = null;
         startDrag = Vector3.zero;
+        isWhiteTurn = !isWhiteTurn;
+        CheckVictory();
+    }
+
+    private void CheckVictory(){
+
     }
 
     private void UpdatePieceDrag(Piece p)
