@@ -24,6 +24,19 @@ public class Piece : MonoBehaviour
                         return true;
                 }
             }
+        }
+        if(isWhite || isKing){
+            if(deltaMove == 1){
+                if(deltaMoveY == -1)
+                    return true;
+            }
+            else if(deltaMove == 2){
+                if(deltaMoveY == -2){
+                    Piece p = board[(x1 + x2)/2, (y1 + y2)/2];
+                    if(p != null && p.isWhite != isWhite)
+                        return true;
+                }
+            }
         } 
         return false;   
     }
