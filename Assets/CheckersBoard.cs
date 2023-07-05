@@ -58,11 +58,14 @@ public class CheckersBoard : MonoBehaviour
             }
         }
         //check if valid move
-        if(selectedPiece.validMove(pieces, x1, y1, x2, y2)){
-            if(Mathf.Abs(x2-x2)==2){
-                Piece p = pieces[(x1 + x2)/2, (y1 + y2)/2];
-                if(p != null){
-                    pieces[(x1 + x2)/2, (y1 + y2)/2] = null;
+        if (selectedPiece.validMove(pieces, x1, y1, x2, y2))
+        {
+            if (Mathf.Abs(x2 - x2) == 2)
+            {
+                Piece p = pieces[(x1 + x2) / 2, (y1 + y2) / 2];
+                if (p != null)
+                {
+                    pieces[(x1 + x2) / 2, (y1 + y2) / 2] = null;
                     Destroy(p);
                 }
             }
@@ -71,16 +74,25 @@ public class CheckersBoard : MonoBehaviour
             MovePiece(selectedPiece, x2, y2);
             EndTurn();
         }
+        else
+        {
+            MovePiece(selectedPiece, x1, y1);
+            startDrag = Vector2.zero;
+            selectedPiece = null;
+            return;
+        }
     }
 
-    private void EndTurn(){
+    private void EndTurn()
+    {
         selectedPiece = null;
         startDrag = Vector3.zero;
         isWhiteTurn = !isWhiteTurn;
         CheckVictory();
     }
 
-    private void CheckVictory(){
+    private void CheckVictory()
+    {
 
     }
 
