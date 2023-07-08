@@ -366,14 +366,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.5311404, y: -0, z: -0, w: 0.84728384}
-  m_LocalPosition: {x: 0, y: 7.09, z: -4.5}
+  m_LocalRotation: {x: 0.6712709, y: 0.0089782085, z: -0.0035820403, w: 0.74114907}
+  m_LocalPosition: {x: 0.16, y: 8.2, z: -0.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 64.165, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 84.319, y: 4.925, z: 3.906}
 --- !u!1001 &1091335721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -454,6 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whitePiecePrefab: {fileID: 6636208931125369819, guid: ed4be8d8ab239ad4c9250df261e44362, type: 3}
   blackPiecePrefab: {fileID: 3952632309996745479, guid: 61b22a8005e43de4ebff4058f3919ba1, type: 3}
+  isWhite: 0
 --- !u!114 &2080243530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,6 +467,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbf0d2e13abf374dab3c1a264648888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isWhite: 0
+  isKing: 0
 --- !u!65 &2080243531
 BoxCollider:
   m_ObjectHideFlags: 0
