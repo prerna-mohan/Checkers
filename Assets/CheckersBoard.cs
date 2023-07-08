@@ -26,15 +26,17 @@ public class CheckersBoard : MonoBehaviour
     private void Update()
     {
         UpdateMouseOver();
-        //if its my turn
-        int x = (int)mouseOver.x;
-        int y = (int)mouseOver.y;
-        if (selectedPiece != null)
-            UpdatePieceDrag(selectedPiece);
-        if (Input.GetMouseButtonDown(0))
-            SelectPiece(x, y);
-        if (Input.GetMouseButtonUp(0))
-            TryMove((int)startDrag.x, (int)startDrag.y, x, y);
+        if((isWhite) ? isWhiteTurn : !isWhiteTurn)
+        {
+            int x = (int)mouseOver.x;
+            int y = (int)mouseOver.y;
+            if (selectedPiece != null)
+                UpdatePieceDrag(selectedPiece);
+            if (Input.GetMouseButtonDown(0))
+                SelectPiece(x, y);
+            if (Input.GetMouseButtonUp(0))
+                TryMove((int)startDrag.x, (int)startDrag.y, x, y);
+        }
     }
 
     private void TryMove(int x1, int y1, int x2, int y2)
@@ -66,7 +68,7 @@ public class CheckersBoard : MonoBehaviour
         if (selectedPiece.validMove(pieces, x1, y1, x2, y2))
         {
             if (Mathf.Abs(x2 - x1) == 2)
-            { 
+            {
                 Piece p = pieces[(x1 + x2) / 2, (y1 + y2) / 2];
                 if (p != null)
                 {
@@ -98,18 +100,61 @@ public class CheckersBoard : MonoBehaviour
 
     private void EndTurn()
     {
+        int x = (int)endDrag.x;
+        int y = (int)endDrag.y;
+        //promotions
+        if (selectedPiece != null)
+        {
+            if (selectedPiece.isWhite && !selectedPiece.isKing && y == 7)
+            {
+                selectedPiece.isKing = true;
+                selectedPiece.transform.Rotate(Vector3.right * 180);
+            }
+            if (!selectedPiece.isWhite && !selectedPiece.isKing && y == 0)
+            {
+                selectedPiece.isKing = true;
+                selectedPiece.transform.Rotate(Vector3.right * 180);
+            }
+        }
         selectedPiece = null;
         startDrag = Vector3.zero;
+
+        if (ScanForPossibleMove(selectedPiece, x, y).Count != 0 && hasKilled)
+            return;
+
         isWhiteTurn = !isWhiteTurn;
+        isWhite = !isWhite;
         hasKilled = false;
         CheckVictory();
     }
 
     private void CheckVictory()
     {
+        var ps = FindObjectsOfType<Piece>();
+        bool hasWhite = false, hasBlack = false;
+        for(int i=0; i<ps.Length; i++){
+            if(ps[i].isWhite)
+                hasWhite =true;
+            else
+                hasBlack = true;    
+        }
+        if(!hasWhite)
+            Victory(false);
+        if(!hasBlack)
+            Victory(true);
+    }
+    
+    private void Victory(bool isWhite){
 
     }
 
+    private List<Piece> ScanForPossibleMove(Piece p, int x, int y)
+    {
+        forcedPieces = new List<Piece>();
+        if (pieces[x, y].isForceToMove(pieces, x, y))
+            forcedPieces.Add(pieces[x, y]);
+        return forcedPieces;
+    }
     private List<Piece> ScanForPossibleMove()
     {
         forcedPieces = new List<Piece>();
@@ -142,16 +187,17 @@ public class CheckersBoard : MonoBehaviour
         Piece p = pieces[x, y];
         if (p != null && p.isWhite == isWhite)
         {
-            if(forcedPieces.Count == 0)
+            if (forcedPieces.Count == 0)
             {
                 selectedPiece = p;
-            startDrag = mouseOver;
+                startDrag = mouseOver;
             }
-            else{
-                if(forcedPieces.Find(fp => fp==p)==null)
+            else
+            {
+                if (forcedPieces.Find(fp => fp == p) == null)
                     return;
                 selectedPiece = p;
-                startDrag = mouseOver;    
+                startDrag = mouseOver;
             }
         }
     }
